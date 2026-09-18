@@ -1,0 +1,127 @@
+|--- spread <= 0.50
+|   |--- clustering <= 0.64
+|   |   |--- direction_bias <= 0.97
+|   |   |   |--- density <= 0.69
+|   |   |   |   |--- direction_bias <= 0.35
+|   |   |   |   |   |--- class: FCFS
+|   |   |   |   |--- direction_bias >  0.35
+|   |   |   |   |   |--- class: FCFS
+|   |   |   |--- density >  0.69
+|   |   |   |   |--- spread <= 0.11
+|   |   |   |   |   |--- spread <= 0.10
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |   |   |--- spread >  0.10
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |   |--- spread >  0.11
+|   |   |   |   |   |--- class: FCFS
+|   |   |--- direction_bias >  0.97
+|   |   |   |--- spread <= 0.21
+|   |   |   |   |--- clustering <= 0.14
+|   |   |   |   |   |--- clustering <= 0.03
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |   |   |--- clustering >  0.03
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |   |--- clustering >  0.14
+|   |   |   |   |   |--- class: SSTF
+|   |   |   |--- spread >  0.21
+|   |   |   |   |--- class: SSTF
+|   |--- clustering >  0.64
+|   |   |--- density <= 0.35
+|   |   |   |--- clustering <= 0.89
+|   |   |   |   |--- density <= 0.22
+|   |   |   |   |   |--- class: SCAN
+|   |   |   |   |--- density >  0.22
+|   |   |   |   |   |--- spread <= 0.48
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- spread >  0.48
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |--- clustering >  0.89
+|   |   |   |   |--- spread <= 0.45
+|   |   |   |   |   |--- class: FCFS
+|   |   |   |   |--- spread >  0.45
+|   |   |   |   |   |--- class: FCFS
+|   |   |--- density >  0.35
+|   |   |   |--- spread <= 0.48
+|   |   |   |   |--- spread <= 0.47
+|   |   |   |   |   |--- spread <= 0.45
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- spread >  0.45
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |--- spread >  0.47
+|   |   |   |   |   |--- direction_bias <= 0.24
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- direction_bias >  0.24
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |--- spread >  0.48
+|   |   |   |   |--- direction_bias <= 0.29
+|   |   |   |   |   |--- direction_bias <= 0.23
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- direction_bias >  0.23
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |--- direction_bias >  0.29
+|   |   |   |   |   |--- class: C-SCAN
+|--- spread >  0.50
+|   |--- spread <= 0.67
+|   |   |--- spread <= 0.51
+|   |   |   |--- direction_bias <= 0.26
+|   |   |   |   |--- spread <= 0.50
+|   |   |   |   |   |--- class: C-SCAN
+|   |   |   |   |--- spread >  0.50
+|   |   |   |   |   |--- class: C-SCAN
+|   |   |   |--- direction_bias >  0.26
+|   |   |   |   |--- class: SCAN
+|   |   |--- spread >  0.51
+|   |   |   |--- clustering <= 0.38
+|   |   |   |   |--- class: SCAN
+|   |   |   |--- clustering >  0.38
+|   |   |   |   |--- direction_bias <= 0.43
+|   |   |   |   |   |--- density <= 0.54
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- density >  0.54
+|   |   |   |   |   |   |--- class: FCFS
+|   |   |   |   |--- direction_bias >  0.43
+|   |   |   |   |   |--- class: SCAN
+|   |--- spread >  0.67
+|   |   |--- density <= 0.25
+|   |   |   |--- direction_bias <= 0.24
+|   |   |   |   |--- density <= 0.12
+|   |   |   |   |   |--- class: SSTF
+|   |   |   |   |--- density >  0.12
+|   |   |   |   |   |--- density <= 0.24
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |   |   |--- density >  0.24
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |--- direction_bias >  0.24
+|   |   |   |   |--- spread <= 0.84
+|   |   |   |   |   |--- spread <= 0.73
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |   |   |   |--- spread >  0.73
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |   |--- spread >  0.84
+|   |   |   |   |   |--- spread <= 0.85
+|   |   |   |   |   |   |--- class: C-SCAN
+|   |   |   |   |   |--- spread >  0.85
+|   |   |   |   |   |   |--- class: SSTF
+|   |   |--- density >  0.25
+|   |   |   |--- spread <= 0.81
+|   |   |   |   |--- density <= 0.28
+|   |   |   |   |   |--- clustering <= 0.31
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |   |   |--- clustering >  0.31
+|   |   |   |   |   |   |--- class: C-SCAN
+|   |   |   |   |--- density >  0.28
+|   |   |   |   |   |--- density <= 0.46
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |   |   |--- density >  0.46
+|   |   |   |   |   |   |--- class: C-SCAN
+|   |   |   |--- spread >  0.81
+|   |   |   |   |--- spread <= 0.83
+|   |   |   |   |   |--- clustering <= 0.73
+|   |   |   |   |   |   |--- class: C-SCAN
+|   |   |   |   |   |--- clustering >  0.73
+|   |   |   |   |   |   |--- class: C-SCAN
+|   |   |   |   |--- spread >  0.83
+|   |   |   |   |   |--- spread <= 0.84
+|   |   |   |   |   |   |--- class: SCAN
+|   |   |   |   |   |--- spread >  0.84
+|   |   |   |   |   |   |--- class: C-SCAN
