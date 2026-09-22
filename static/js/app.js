@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btnDirDown: document.getElementById('btnDirDown'),
         algoSelect: document.getElementById('algoSelect'),
         genCountInput: document.getElementById('genCountInput'),
-        genSeedInput: document.getElementById('genSeedInput'),
         
         // Buttons
         btnSimulate: document.getElementById('btnSimulate'),
@@ -410,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function generateWorkloadPattern(pattern) {
         const count = parseInt(elements.genCountInput.value, 10) || 20;
-        const seed = elements.genSeedInput.value ? parseInt(elements.genSeedInput.value, 10) : null;
+        const seed = 0; // Fixed internal seed for reproducible workload generation
         const diskSize = parseInt(elements.diskSizeInput.value, 10) || 200;
         const arrPat = elements.arrivalPatternSelect ? elements.arrivalPatternSelect.value : state.arrivalPattern;
 
@@ -418,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const resp = await fetch('/api/generate-workload', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pattern, count, disk_size: diskSize, seed, arrival_pattern: arrPat })
+                body: JSON.stringify({ pattern, count, disk_size: diskSize, seed: 0, arrival_pattern: arrPat })
             });
             const res = await resp.json();
             if (res.success) {
@@ -447,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 initial_head: state.initialHead,
                 direction: state.direction,
                 arrival_pattern: state.arrivalPattern,
-                seed: elements.genSeedInput.value ? parseInt(elements.genSeedInput.value, 10) : 42,
+                seed: 0,
                 _timestamp: Date.now()
             };
 

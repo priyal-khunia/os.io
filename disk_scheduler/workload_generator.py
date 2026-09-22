@@ -216,7 +216,7 @@ def generate_workload(
     pattern: str = "random",
     count: int = 20,
     disk_size: int = 200,
-    seed: Optional[int] = None,
+    seed: Optional[int] = 0,
     arrival_pattern: str = "all_at_once"
 ) -> Dict[str, Any]:
     """
@@ -227,6 +227,9 @@ def generate_workload(
     if pattern_key not in GENERATORS:
         raise ValueError(f"Unknown workload pattern '{pattern}'. Choose from {list(GENERATORS.keys())}")
     
+    if seed is None:
+        seed = 0
+
     generator_fn = GENERATORS[pattern_key]
     requests = generator_fn(count=count, disk_size=disk_size, seed=seed)
     arrival_times = generate_arrival_times(count=len(requests), arrival_pattern=arrival_pattern, seed=seed)

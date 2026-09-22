@@ -111,7 +111,7 @@ def api_generate_workload():
         count = int(data.get("count", 20))
         disk_size = int(data.get("disk_size", 200))
         seed = data.get("seed")
-        seed = int(seed) if seed is not None and seed != "" else None
+        seed = int(seed) if seed is not None and str(seed).strip() != "" else 0
 
         count = max(1, min(200, count))
         disk_size = max(10, min(10000, disk_size))
@@ -359,7 +359,7 @@ def api_compare_all_workloads():
         direction = str(data.get("direction", "UP")).upper()
         arrival_pattern = str(data.get("arrival_pattern", "all_at_once")).lower()
         seed = data.get("seed")
-        seed = int(seed) if seed is not None and seed != "" else 42
+        seed = int(seed) if seed is not None and str(seed).strip() != "" else 0
 
         count = max(5, min(100, count))
         disk_size = max(20, min(2000, disk_size))
