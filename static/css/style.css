@@ -717,7 +717,228 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Action Buttons */
+/* ==========================================================================
+   Action Dashboard Section (Redesigned)
+   ========================================================================== */
+
+.action-dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--border-light);
+}
+
+/* Primary Action Row: Phase 1 & Phase 2 */
+.action-group-primary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+}
+
+.action-card-primary {
+    padding: 1.1rem 1.35rem;
+    min-height: 84px;
+    justify-content: center;
+}
+
+/* Phase 1: Clean Dark Slate aesthetic */
+.action-phase-1 {
+    background: #0f172a;
+    color: #ffffff;
+    border: 1.5px solid #1e293b;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.12);
+}
+
+.action-phase-1:hover {
+    background: #1e293b;
+    border-color: #334155;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+}
+
+.action-phase-1:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.12);
+}
+
+/* Phase 2: Refined Amber/Gold Warm Tech aesthetic */
+.action-phase-2 {
+    background: #ffffff;
+    color: var(--text-primary);
+    border: 1.5px solid #d97706;
+    box-shadow: 0 2px 5px rgba(217, 119, 6, 0.08);
+}
+
+.action-phase-2:hover {
+    background: #fffbeb;
+    border-color: #b45309;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.15);
+}
+
+.action-phase-2:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.08);
+}
+
+.action-badge-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+
+.action-phase-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+}
+
+.phase-2-badge {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.action-content {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.action-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.action-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.action-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.action-phase-1 .action-title {
+    color: #ffffff;
+}
+
+.action-phase-2 .action-title {
+    color: #92400e;
+}
+
+.action-subtitle {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    font-weight: 500;
+}
+
+.action-phase-1 .action-subtitle {
+    color: #94a3b8;
+}
+
+.action-phase-2 .action-subtitle {
+    color: #78350f;
+}
+
+/* Secondary Actions Row */
+.action-group-secondary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+.action-card-secondary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.15rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.action-card-secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.action-card-secondary:active {
+    transform: translateY(0);
+}
+
+.action-icon-sm {
+    font-size: 1.15rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.action-title-sm {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.action-subtitle-sm {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Responsive Stacking */
+@media (max-width: 768px) {
+    .action-group-primary {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .action-group-secondary {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+
+    .action-card-primary {
+        padding: 1rem 1.15rem;
+    }
+}
+
+/* Action Buttons (Legacy / Secondary) */
 .config-actions {
     display: flex;
     gap: 0.75rem;

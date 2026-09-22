@@ -320,8 +320,13 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.headSlider.value = headVal;
         elements.headValueDisplay.textContent = headVal;
 
+        const simTitle = elements.btnSimulate.querySelector('.action-title');
         elements.btnSimulate.disabled = true;
-        elements.btnSimulate.textContent = 'Simulating...';
+        if (simTitle) {
+            simTitle.textContent = 'Simulating...';
+        } else {
+            elements.btnSimulate.textContent = 'Simulating...';
+        }
 
         try {
             const payload = {
@@ -361,7 +366,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('API Error during simulation:', err);
         } finally {
             elements.btnSimulate.disabled = false;
-            elements.btnSimulate.textContent = '▶ Simulate Trajectory';
+            if (simTitle) {
+                simTitle.textContent = 'Simulate Selected Algorithm';
+            } else {
+                elements.btnSimulate.textContent = '▶ Simulate Selected Algorithm';
+            }
         }
     }
 
@@ -435,8 +444,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function run4WorkloadBenchmark() {
-        elements.btnBenchmarkWorkloads.disabled = true;
-        elements.btnBenchmarkWorkloads.textContent = 'Benchmarking Matrix...';
+        const matrixTitle = elements.btnBenchmarkWorkloads?.querySelector('.action-title-sm');
+        if (elements.btnBenchmarkWorkloads) {
+            elements.btnBenchmarkWorkloads.disabled = true;
+            if (matrixTitle) {
+                matrixTitle.textContent = 'Benchmarking Matrix...';
+            } else {
+                elements.btnBenchmarkWorkloads.textContent = 'Benchmarking Matrix...';
+            }
+        }
         switchTab('workloads-tab');
 
         try {
@@ -464,8 +480,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error('Benchmark error:', e);
         } finally {
-            elements.btnBenchmarkWorkloads.disabled = false;
-            elements.btnBenchmarkWorkloads.textContent = '⚡ 4-Workload Matrix';
+            if (elements.btnBenchmarkWorkloads) {
+                elements.btnBenchmarkWorkloads.disabled = false;
+                if (matrixTitle) {
+                    matrixTitle.textContent = 'Workload Matrix';
+                } else {
+                    elements.btnBenchmarkWorkloads.textContent = '⚡ Workload Matrix';
+                }
+            }
         }
     }
 

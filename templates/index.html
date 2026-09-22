@@ -208,20 +208,57 @@
                 </div>
             </div>
 
-            <!-- Action Controls -->
-            <div class="config-actions">
-                <button class="btn btn-primary" id="btnSimulate">
-                    <span>▶</span> Simulate Trajectory
-                </button>
-                <button class="btn btn-adaptive" id="btnRunAdaptive" type="button" title="Execute Adaptive Scheduler on Current Workload">
-                    <span>🧠</span> Run Adaptive
-                </button>
-                <button class="btn btn-secondary" id="btnCompareAll">
-                    <span>📊</span> Compare All Algorithms
-                </button>
-                <button class="btn btn-accent" id="btnBenchmarkWorkloads">
-                    <span>⚡</span> 4-Workload Matrix
-                </button>
+            <!-- Action Controls Redesigned: Primary Actions (Phase 1 & Phase 2) & Secondary Analysis -->
+            <div class="action-dashboard-section">
+                <!-- Row 1: Primary Actions (Phase 1 & Phase 2) -->
+                <div class="action-group-primary">
+                    <!-- Left: Phase 1 -->
+                    <button type="button" class="action-card action-card-primary action-phase-1" id="btnSimulate">
+                        <div class="action-badge-row">
+                            <span class="action-phase-badge">Phase 1</span>
+                        </div>
+                        <div class="action-content">
+                            <span class="action-icon">▶</span>
+                            <div class="action-text-group">
+                                <span class="action-title">Simulate Selected Algorithm</span>
+                                <span class="action-subtitle">Run the algorithm selected above</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Right: Phase 2 -->
+                    <button type="button" class="action-card action-card-primary action-phase-2" id="btnRunAdaptive" title="Execute Adaptive Scheduler on Current Workload">
+                        <div class="action-badge-row">
+                            <span class="action-phase-badge phase-2-badge">Phase 2</span>
+                        </div>
+                        <div class="action-content">
+                            <span class="action-icon">🧠</span>
+                            <div class="action-text-group">
+                                <span class="action-title">Run Adaptive Analysis</span>
+                                <span class="action-subtitle">Let the adaptive engine select the policy</span>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Row 2: Secondary Analysis Actions -->
+                <div class="action-group-secondary">
+                    <button type="button" class="action-card action-card-secondary" id="btnCompareAll">
+                        <span class="action-icon-sm">📊</span>
+                        <div class="action-text-group">
+                            <span class="action-title-sm">Compare All Algorithms</span>
+                            <span class="action-subtitle-sm">Compare FCFS, SSTF, SCAN and C-SCAN</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="action-card action-card-secondary" id="btnBenchmarkWorkloads">
+                        <span class="action-icon-sm">⚡</span>
+                        <div class="action-text-group">
+                            <span class="action-title-sm">Workload Matrix</span>
+                            <span class="action-subtitle-sm">Evaluate multiple workload distributions</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -453,7 +490,7 @@
                         <tbody id="stepsTableBody">
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                                    No telemetry recorded. Enter a queue or generate a workload and click <strong>Simulate Trajectory</strong>.
+                                    No telemetry recorded. Enter a queue or generate a workload and click <strong>Simulate Selected Algorithm</strong>.
                                 </td>
                             </tr>
                         </tbody>
@@ -518,7 +555,7 @@
             <div class="card">
                 <div class="card-header">
                     <div>
-                        <h3 class="card-title"><span class="title-icon">⚡</span> 4-Workload Matrix</h3>
+                        <h3 class="card-title"><span class="title-icon">⚡</span> Workload Matrix</h3>
                         <p class="card-subtitle">Performance across Random, Sequential, Clustered, and Bursty patterns</p>
                     </div>
                     <button class="btn btn-primary btn-sm" id="btnRefreshWorkloadBenchmark">
@@ -529,7 +566,7 @@
                 <!-- Matrix / Heatmap Grid -->
                 <div class="workloads-benchmark-grid" id="workloadBenchmarkGrid">
                     <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2.5rem;">
-                        Awaiting workload matrix execution. Click <strong>4-Workload Matrix</strong> to run benchmark.
+                        Awaiting workload matrix execution. Click <strong>Workload Matrix</strong> to run benchmark.
                     </div>
                 </div>
 
