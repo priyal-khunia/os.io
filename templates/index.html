@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Adaptive Disk Scheduling Simulator featuring FCFS, SSTF, SCAN, C-SCAN, Workload Feature Extraction, and scikit-learn Decision Tree Classifier.">
-    <title>Adaptive Disk Scheduling Simulator (FCFS, SSTF, SCAN, C-SCAN)</title>
+    <meta name="description" content="Interactive Disk Scheduling Simulator featuring FCFS, SSTF, SCAN, C-SCAN, and Adaptive ML Policy Engine.">
+    <title>Disk Scheduling Simulator & Analytics Dashboard</title>
     
     <!-- Modern Premium Typography: Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,19 +24,16 @@
             <div class="header-left">
                 <span class="logo-badge">SYS-IO</span>
                 <div>
-                    <h1 class="header-title">Adaptive Disk Scheduling Simulator</h1>
-                    <p class="header-subtitle">FCFS, SSTF, SCAN, C-SCAN • Pattern Classifier & Decision Tree • Physical HDD Timing Model</p>
+                    <h1 class="header-title">Disk Scheduling Simulator</h1>
+                    <p class="header-subtitle">FCFS • SSTF • SCAN • C-SCAN • Adaptive & ML Engine</p>
                 </div>
             </div>
             <div class="header-badges">
-                <button class="viva-guide-btn" id="btnVivaModalOpen" type="button" title="View Project Methodology & Viva Reference Guide">
-                    📘 Viva Guide
-                </button>
                 <span class="status-badge" id="apiStatusBadge">
                     <span class="status-dot"></span> Online
                 </span>
                 <button class="theme-toggle" id="btnResetAll" title="Clear All & Reset Workstation">
-                    Reset Workstation
+                    Reset
                 </button>
             </div>
         </header>
@@ -44,16 +41,16 @@
         <!-- Navigation Tabs -->
         <nav class="nav-tabs" role="tablist">
             <button class="tab-btn active" data-tab="simulator-tab" id="tabBtnSim">
-                Simulation & Oscillogram
+                Simulation
             </button>
             <button class="tab-btn" data-tab="compare-tab" id="tabBtnComp">
-                Multi-Algorithm Benchmark
+                Algorithm Comparison
             </button>
             <button class="tab-btn" data-tab="workloads-tab" id="tabBtnWorkloads">
-                4-Workload Matrix Analysis
+                Workload Matrix
             </button>
             <button class="tab-btn" data-tab="arrival-tab" id="tabBtnArrival">
-                Arrival Pattern Evaluation
+                Arrival Patterns
             </button>
         </nav>
 
@@ -61,7 +58,7 @@
         <section class="card config-card" id="configSection">
             <div class="card-header">
                 <h2 class="card-title">
-                    <span class="title-icon">⚙</span> Workload Configuration
+                    <span class="title-icon">⚙</span> Configuration
                 </h2>
                 <div class="quick-presets">
                     <span class="preset-label">Presets:</span>
@@ -97,8 +94,8 @@
                     <!-- Sub-section 2: Synthetic Pattern Generator -->
                     <div class="config-box config-box-generator">
                         <div class="config-box-header">
-                            <span class="config-box-title">Synthetic Pattern Generator</span>
-                            <span class="config-box-hint">Spatial distributions & timing patterns</span>
+                            <span class="config-box-title">Workload Generator</span>
+                            <span class="config-box-hint">Generate synthetic request distribution</span>
                         </div>
                         <div class="generator-buttons">
                             <button class="gen-btn" data-pattern="random" id="btnGenRandom" type="button">
@@ -106,28 +103,28 @@
                                     <span class="gen-tag">RND</span>
                                     <span class="gen-name">Random</span>
                                 </div>
-                                <span class="gen-desc">Uniform stochastic spread</span>
+                                <span class="gen-desc">Scattered requests</span>
                             </button>
                             <button class="gen-btn" data-pattern="sequential" id="btnGenSequential" type="button">
                                 <div class="gen-header">
                                     <span class="gen-tag">SEQ</span>
                                     <span class="gen-name">Sequential</span>
                                 </div>
-                                <span class="gen-desc">Streaming contiguous runs</span>
+                                <span class="gen-desc">Ordered requests</span>
                             </button>
                             <button class="gen-btn" data-pattern="clustered" id="btnGenClustered" type="button">
                                 <div class="gen-header">
                                     <span class="gen-tag">CLS</span>
                                     <span class="gen-name">Clustered</span>
                                 </div>
-                                <span class="gen-desc">Multi-hotspot locality</span>
+                                <span class="gen-desc">Localized requests</span>
                             </button>
                             <button class="gen-btn" data-pattern="bursty" id="btnGenBursty" type="button">
                                 <div class="gen-header">
                                     <span class="gen-tag">BST</span>
                                     <span class="gen-name">Bursty</span>
                                 </div>
-                                <span class="gen-desc">Local bursts + sector jumps</span>
+                                <span class="gen-desc">Local requests with large jumps</span>
                             </button>
                         </div>
                         <div class="generator-params">
@@ -140,13 +137,13 @@
                                 <input type="number" id="genSeedInput" placeholder="Auto" class="mini-input">
                             </div>
                             <div class="param-item arrival-param-item">
-                                <label for="arrivalPatternSelect">Arrival Pattern:</label>
+                                <label for="arrivalPatternSelect">Arrival:</label>
                                 <select id="arrivalPatternSelect" class="styled-select mini-select">
-                                    <option value="all_at_once" selected>All-at-Once (Batch t=0 ms)</option>
-                                    <option value="sequential">Sequential Arrival (Δt=5 ms)</option>
-                                    <option value="random">Random Arrival (Stochastic jitter)</option>
-                                    <option value="bursty">Bursty Arrival (Cluster epochs)</option>
-                                    <option value="continuous">Continuous Stream (Rapid 2 ms)</option>
+                                    <option value="all_at_once" selected>All-at-Once (Batch t=0)</option>
+                                    <option value="sequential">Sequential (Δt=5ms)</option>
+                                    <option value="random">Random Jitter</option>
+                                    <option value="bursty">Bursty Clusters</option>
+                                    <option value="continuous">Continuous (Δt=2ms)</option>
                                 </select>
                             </div>
                         </div>
@@ -199,17 +196,17 @@
                             <div class="field-box">
                                 <label for="algoSelect" class="field-label">Algorithm</label>
                                 <select id="algoSelect" class="styled-select">
-                                    <option value="ADAPTIVE" selected>Adaptive Scheduler (AI Policy)</option>
-                                    <option value="FCFS">FCFS (First-Come First-Served)</option>
+                                    <option value="ADAPTIVE" selected>Adaptive (ML / Expert Policy)</option>
+                                    <option value="FCFS">FCFS (First Come First Served)</option>
                                     <option value="SSTF">SSTF (Shortest Seek Time First)</option>
-                                    <option value="SCAN">SCAN (Elevator Algorithm)</option>
+                                    <option value="SCAN">SCAN (Elevator Scheduling)</option>
                                     <option value="C-SCAN">C-SCAN (Circular SCAN)</option>
                                 </select>
                             </div>
                         </div>
                         <div class="policy-footer">
                             <span class="policy-pill">POLICY</span>
-                            <span class="policy-desc">Dynamically switches or executes classical disk scheduling algorithms</span>
+                            <span class="policy-desc">Select scheduling algorithm or run Adaptive</span>
                         </div>
                     </div>
                 </div>
@@ -221,7 +218,7 @@
                     <span>▶</span> Simulate Trajectory
                 </button>
                 <button class="btn btn-adaptive" id="btnRunAdaptive" type="button" title="Execute Adaptive Scheduler on Current Workload">
-                    <span>🧠</span> Run Adaptive Scheduler
+                    <span>🧠</span> Run Adaptive
                 </button>
                 <button class="btn btn-secondary" id="btnCompareAll">
                     <span>📊</span> Compare All Algorithms
@@ -235,7 +232,7 @@
         <!-- Section 2: Interactive Platter Head Track Strip -->
         <section class="card platter-card">
             <div class="platter-header">
-                <span class="platter-title">Platter Cylinder Map & Read/Write Head Tracker</span>
+                <span class="platter-title">Platter Cylinder Map & Head Tracker</span>
                 <span class="platter-legend">
                     <span><span class="dot head-dot"></span> Active Head</span>
                     <span><span class="dot req-dot"></span> Pending Request</span>
@@ -262,7 +259,7 @@
                         <span class="ai-chip-icon">AI</span>
                         <div>
                             <h3 class="ai-card-title">Workload Feature Extraction & Adaptive Engine</h3>
-                            <p class="ai-card-sub">Statistical Analysis • Spatial Spread, Density, Clustering & Direction Bias</p>
+                            <p class="ai-card-sub">Queue Features • Rule-Based & ML Decision Tree</p>
                         </div>
                     </div>
                     <div class="ai-badges-group">
@@ -314,13 +311,13 @@
                 <div class="recommendation-dual-container">
                     <!-- Box 1: Rule-Based Recommendation -->
                     <div class="ai-recommendation-box rule-rec-box" id="aiRecBox">
-                        <span class="rec-tag">Rule-Based Expert Engine</span>
+                        <span class="rec-tag">Rule-Based Policy</span>
                         <div class="rec-content">
                             <div class="rec-title">
-                                Recommended Algorithm: <span class="rec-algo" id="recAlgoName">-</span>
+                                Recommended: <span class="rec-algo" id="recAlgoName">-</span>
                             </div>
                             <p class="rec-reason" id="recAlgoReason">
-                                Awaiting workload input. Enter requests or trigger synthetic generator to analyze kinematics.
+                                Awaiting workload input.
                             </p>
                         </div>
                         <button class="btn btn-sm btn-outline" id="btnApplyAdaptive" type="button">Apply Choice</button>
@@ -328,14 +325,14 @@
 
                     <!-- Box 2: ML Decision Tree Prediction -->
                     <div class="ai-recommendation-box ml-rec-box" id="mlRecBox">
-                        <span class="rec-tag ml-tag">ML Decision Tree (scikit-learn)</span>
+                        <span class="rec-tag ml-tag">ML Decision Tree</span>
                         <div class="rec-content">
                             <div class="rec-title">
-                                ML Model Prediction: <span class="rec-algo ml-algo" id="mlAlgoName">-</span>
+                                Predicted: <span class="rec-algo ml-algo" id="mlAlgoName">-</span>
                                 <span class="ml-conf-badge" id="mlAlgoConf"></span>
                             </div>
                             <p class="rec-reason" id="mlAlgoReason">
-                                Dual-objective Decision Tree analyzing [spread, density, clustering, direction_bias].
+                                Awaiting workload input.
                             </p>
                         </div>
                         <button class="btn btn-sm btn-outline" id="btnApplyMl" type="button">Apply ML Choice</button>
@@ -347,11 +344,11 @@
                     <div class="adaptive-banner-icon">🧠</div>
                     <div class="adaptive-banner-text">
                         <div class="adaptive-banner-title">
-                            Adaptive Selection: <span id="adaptiveSelectedAlgo" class="adaptive-highlight">SSTF</span>
-                            <span class="adaptive-basis-chip" id="adaptiveSelectedBasis">Rule-Based Expert Engine</span>
+                            Adaptive Decision: <span id="adaptiveSelectedAlgo" class="adaptive-highlight">SSTF</span>
+                            <span class="adaptive-basis-chip" id="adaptiveSelectedBasis">Expert Policy</span>
                         </div>
                         <div class="adaptive-banner-reason" id="adaptiveSelectedReason">
-                            Optimal algorithm selected based on analyzed workload features.
+                            Optimal algorithm selected for workload.
                         </div>
                     </div>
                 </div>
@@ -360,7 +357,7 @@
             <!-- Performance Telemetry: 5 Clean Cards in Single Row -->
             <section class="card metrics-section">
                 <div class="card-header">
-                    <h3 class="card-title"><span class="title-icon">📈</span> Performance Telemetry Metrics</h3>
+                    <h3 class="card-title"><span class="title-icon">📈</span> Performance Metrics</h3>
                     <span class="algo-pill" id="activeAlgoBadge">Standby</span>
                 </div>
                 <div class="metrics-grid">
@@ -371,7 +368,7 @@
                             <span class="metric-code">Distance</span>
                         </div>
                         <div class="metric-value" id="metricSeekDist">-<span class="unit">cyl</span></div>
-                        <span class="metric-sub" id="metricSeekDistSub">Total cylinder traversal</span>
+                        <span class="metric-sub" id="metricSeekDistSub">Total head movement</span>
                     </div>
 
                     <!-- Metric 2: Service Time -->
@@ -381,7 +378,7 @@
                             <span class="metric-code">Latency</span>
                         </div>
                         <div class="metric-value" id="metricServiceTime">-<span class="unit">ms</span></div>
-                        <span class="metric-sub">7200 RPM: seek + 4.17ms rot + transfer</span>
+                        <span class="metric-sub">Total servicing latency</span>
                     </div>
 
                     <!-- Metric 3: Throughput -->
@@ -391,7 +388,7 @@
                             <span class="metric-code">Rate</span>
                         </div>
                         <div class="metric-value" id="metricThroughput">-<span class="unit">req/s</span></div>
-                        <span class="metric-sub">Serviced requests / elapsed time</span>
+                        <span class="metric-sub">Requests serviced per second</span>
                     </div>
 
                     <!-- Metric 4: Fairness -->
@@ -411,7 +408,7 @@
                             <span class="metric-code">Response</span>
                         </div>
                         <div class="metric-value" id="metricResponseTime">-<span class="unit">ms</span></div>
-                        <span class="metric-sub" id="metricResponseTimeSub">Completion time - Arrival time</span>
+                        <span class="metric-sub" id="metricResponseTimeSub">Mean completion - arrival time</span>
                     </div>
                 </div>
             </section>
@@ -420,12 +417,12 @@
             <div class="card chart-card">
                 <div class="card-header">
                     <div class="header-with-badge">
-                        <h3 class="card-title"><span class="title-icon">📉</span> Head Trajectory Oscillogram</h3>
+                        <h3 class="card-title"><span class="title-icon">📉</span> Head Trajectory</h3>
                     </div>
                     <div class="chart-controls">
                         <label class="toggle-control">
                             <input type="checkbox" id="chkOverlayAll">
-                            <span>Overlay all 4 classical algorithms</span>
+                            <span>Overlay all 4 algorithms</span>
                         </label>
                     </div>
                 </div>
@@ -433,16 +430,16 @@
                     <canvas id="headMovementChart"></canvas>
                 </div>
                 <div class="chart-footnote">
-                    <span>X-Axis: Execution step sequence</span>
-                    <span>Y-Axis: Cylinder track index [0 .. <span class="maxCylFootnote">199</span>]</span>
-                    <span>● Serviced Request &nbsp;|&nbsp; ◆ Boundary Turnaround &nbsp;|&nbsp; ▲ Circular Reset</span>
+                    <span>X-Axis: Step sequence</span>
+                    <span>Y-Axis: Cylinder track [0 .. <span class="maxCylFootnote">199</span>]</span>
+                    <span>● Serviced Request &nbsp;|&nbsp; ◆ Turnaround &nbsp;|&nbsp; ▲ Circular Reset</span>
                 </div>
             </div>
 
             <!-- Step-by-Step Servicing Table -->
             <div class="card table-card">
                 <div class="card-header">
-                    <h3 class="card-title"><span class="title-icon">📋</span> Step-by-Step Servicing Event Log</h3>
+                    <h3 class="card-title"><span class="title-icon">📋</span> Step-by-Step Servicing Log</h3>
                     <span id="stepCountBadge" class="table-badge">0 steps</span>
                 </div>
                 <div class="table-wrapper">
@@ -454,13 +451,13 @@
                                 <th>Head Delta (Δ cyl)</th>
                                 <th>Accumulated Seek</th>
                                 <th>Event Status</th>
-                                <th>Execution Event Log</th>
+                                <th>Execution Event</th>
                             </tr>
                         </thead>
                         <tbody id="stepsTableBody">
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                                    No telemetry recorded. Enter a queue or generate a synthetic workload and click <strong>Simulate Trajectory</strong>.
+                                    No telemetry recorded. Enter a queue or generate a workload and click <strong>Simulate Trajectory</strong>.
                                 </td>
                             </tr>
                         </tbody>
@@ -474,8 +471,8 @@
             <div class="card">
                 <div class="card-header">
                     <div>
-                        <h3 class="card-title"><span class="title-icon">📊</span> Multi-Algorithm Benchmark Comparison</h3>
-                        <p class="card-subtitle">Comparative evaluation of FCFS, SSTF, SCAN, C-SCAN, and Adaptive on active queue</p>
+                        <h3 class="card-title"><span class="title-icon">📊</span> Algorithm Comparison</h3>
+                        <p class="card-subtitle">Comparative evaluation across all scheduling policies</p>
                     </div>
                     <div class="metric-filter-buttons">
                         <button class="filter-pill active" data-metric="all">All Metrics</button>
@@ -505,7 +502,7 @@
                                 <th>Jain's Fairness (J)</th>
                                 <th>Fairness (σ²)</th>
                                 <th>Avg Response (ms)</th>
-                                <th>Theoretical Profile</th>
+                                <th>Characteristics</th>
                             </tr>
                         </thead>
                         <tbody id="compareRankingBody">
@@ -525,11 +522,11 @@
             <div class="card">
                 <div class="card-header">
                     <div>
-                        <h3 class="card-title"><span class="title-icon">⚡</span> 4-Workload Pattern Performance Matrix</h3>
-                        <p class="card-subtitle">Evaluation matrix across Random, Sequential, Clustered, and Bursty patterns</p>
+                        <h3 class="card-title"><span class="title-icon">⚡</span> 4-Workload Matrix</h3>
+                        <p class="card-subtitle">Performance across Random, Sequential, Clustered, and Bursty patterns</p>
                     </div>
                     <button class="btn btn-primary btn-sm" id="btnRefreshWorkloadBenchmark">
-                        Re-run Workload Matrix
+                        Re-run Matrix
                     </button>
                 </div>
 
@@ -544,29 +541,6 @@
                 <div class="chart-container" style="margin-top: 1.5rem;">
                     <canvas id="workloadsBenchmarkChart"></canvas>
                 </div>
-
-                <!-- OS Theoretical Takeaways -->
-                <div class="os-insights-section">
-                    <h4 class="insights-title">Operating Systems Scheduling Theory & Principles</h4>
-                    <div class="insights-grid">
-                        <div class="insight-box">
-                            <h5>SSTF: Greedy Proximity vs Starvation</h5>
-                            <p>SSTF minimizes instantaneous seek stroke by clearing dense clusters. However, requests at distant cylinders can suffer indefinite starvation under heavy continuous load.</p>
-                        </div>
-                        <div class="insight-box">
-                            <h5>SCAN: Monotonic Boundary Sweep</h5>
-                            <p>SCAN provides an upper bound on wait time by sweeping continuously from 0 to max cylinder. Prevents starvation with minimal turnaround overhead at boundary tracks.</p>
-                        </div>
-                        <div class="insight-box">
-                            <h5>C-SCAN: Uniform Wait Distribution</h5>
-                            <p>By servicing tracks in a single direction and immediately resetting to cylinder 0, C-SCAN provides a strictly uniform waiting distribution for newly arrived requests.</p>
-                        </div>
-                        <div class="insight-box">
-                            <h5>Adaptive: Real-time Dynamic Switching</h5>
-                            <p>Dynamically selects optimal scheduling policy according to request spatial spread, clustering, direction bias, and arrival pattern metrics.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -575,18 +549,18 @@
             <div class="card">
                 <div class="card-header">
                     <div>
-                        <h3 class="card-title"><span class="title-icon">⏱</span> Arrival Pattern Comparative Evaluation</h3>
-                        <p class="card-subtitle">Performance benchmark across 5 arrival timing patterns: All-at-Once, Sequential, Random, Bursty, and Continuous Stream</p>
+                        <h3 class="card-title"><span class="title-icon">⏱</span> Arrival Pattern Benchmark</h3>
+                        <p class="card-subtitle">Performance benchmark across 5 arrival timing distributions</p>
                     </div>
                     <button class="btn btn-primary btn-sm" id="btnRunArrivalBenchmark">
-                        Run Arrival Pattern Benchmark
+                        Run Arrival Benchmark
                     </button>
                 </div>
 
                 <!-- Arrival Benchmarks Grid -->
                 <div class="arrival-benchmarks-grid" id="arrivalBenchmarkGrid">
                     <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2.5rem;">
-                        Click <strong>Run Arrival Pattern Benchmark</strong> to evaluate algorithms across different request arrival patterns.
+                        Click <strong>Run Arrival Benchmark</strong> to evaluate algorithms across different request arrival patterns.
                     </div>
                 </div>
 
@@ -599,117 +573,9 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Adaptive Disk Scheduling Simulator & Telemetry Workstation</p>
-            <p class="footer-sub">7,200 RPM Physical Timing Model • 4.17ms Avg Rotational Latency • 0.15ms/Cylinder Seek Stroke • Jain's Fairness & Variance</p>
+            <p>Adaptive Disk Scheduling Simulator</p>
+            <p class="footer-sub">Real-time Kinematics • Multi-Algorithm Benchmarking • Adaptive Policy Engine</p>
         </footer>
-    </div>
-
-    <!-- VIVA & METHODOLOGY MODAL -->
-    <div class="modal-backdrop" id="vivaModalBackdrop" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div>
-                    <h3 class="modal-title">📘 Project Methodology & Viva Reference Guide</h3>
-                    <p class="modal-subtitle">Adaptive Disk Scheduling using FCFS, SSTF, SCAN, and C-SCAN</p>
-                </div>
-                <button class="modal-close-btn" id="btnVivaModalClose" type="button">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="viva-section">
-                    <h4>1. Project Overview & Objectives</h4>
-                    <p>
-                        This simulator investigates classical disk-scheduling algorithms (FCFS, SSTF, SCAN, C-SCAN)
-                        and develops an <strong>Adaptive Scheduler</strong> that classifies request spatial patterns
-                        and arrival distributions to select the policy offering lower seek distance and superior fairness.
-                    </p>
-                </div>
-
-                <div class="viva-section">
-                    <h4>2. Phase 1 — Baseline Classical Algorithms</h4>
-                    <ul>
-                        <li><strong>FCFS (First-Come, First-Served)</strong>: Services requests strictly in arrival order. Zero overhead, fair, but suffers from high seek distance under scattered requests.</li>
-                        <li><strong>SSTF (Shortest Seek Time First)</strong>: Greedily services the closest cylinder from the current head. Minimizes seek distance on clusters, but causes starvation for distant requests.</li>
-                        <li><strong>SCAN (Elevator)</strong>: Moves in one direction servicing requests until the boundary track, then reverses direction. Bounds worst-case waiting time and avoids starvation.</li>
-                        <li><strong>C-SCAN (Circular SCAN)</strong>: Moves in one direction servicing requests; at the boundary, resets to the opposite end without servicing and resumes. Provides uniform waiting time distribution.</li>
-                    </ul>
-                </div>
-
-                <div class="viva-section">
-                    <h4>3. Phase 2 — Adaptive Workload-Aware Scheduling</h4>
-                    <p>
-                        The Adaptive Scheduler extracts statistical and spatial features:
-                    </p>
-                    <ul>
-                        <li><strong>Spread</strong>: Normalized cylinder range and standard deviation across disk geometry.</li>
-                        <li><strong>Density</strong>: Spatial concentration of requests per cylinder span.</li>
-                        <li><strong>Clustering</strong>: Coefficient of variation (CV) of sorted differences between requests.</li>
-                        <li><strong>Direction Bias</strong>: Monotonicity and directional net flow.</li>
-                    </ul>
-                    <p>
-                        <strong>Dual AI Engine:</strong>
-                        <br>• <em>Rule-Based Engine</em>: Domain-knowledge rules based on queue length, clustering, and direction.
-                        <br>• <em>ML Decision Tree</em>: Trained scikit-learn DecisionTreeClassifier using a dual-objective cost function that balances seek distance and fairness variance.
-                    </p>
-                </div>
-
-                <div class="viva-section">
-                    <h4>4. Evaluation Metrics & Physical HDD Timing Model</h4>
-                    <table class="viva-table">
-                        <thead>
-                            <tr><th>Metric</th><th>Formula / Definition</th><th>Units</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Seek Distance</td>
-                                <td>Sum of absolute cylinder moves: &Sigma; |head<sub>i</sub> - head<sub>i-1</sub>|</td>
-                                <td>Cylinders</td>
-                            </tr>
-                            <tr>
-                                <td>Service Time</td>
-                                <td>Seek Stroke (0.15ms/cyl + 1.0ms) + 4.17ms Rotational Latency (7200 RPM) + 0.5ms Transfer</td>
-                                <td>Milliseconds (ms)</td>
-                            </tr>
-                            <tr>
-                                <td>Throughput</td>
-                                <td>N requests / (Total Service Time in seconds)</td>
-                                <td>req / second</td>
-                            </tr>
-                            <tr>
-                                <td>Jain's Fairness Index</td>
-                                <td>J = (&Sigma; R<sub>i</sub>)&sup2; / (n &Sigma; R<sub>i</sub>&sup2;) &isin; [1/n, 1.0]</td>
-                                <td>Ratio (1.0 = ideal)</td>
-                            </tr>
-                            <tr>
-                                <td>Fairness Variance</td>
-                                <td>&sigma;&sup2; = (1/n) &Sigma; (R<sub>i</sub> - R&#772;)&sup2;</td>
-                                <td>ms&sup2;</td>
-                            </tr>
-                            <tr>
-                                <td>Response Time</td>
-                                <td>R<sub>i</sub> = Completion Time<sub>i</sub> - Arrival Time<sub>i</sub></td>
-                                <td>Milliseconds (ms)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="viva-section">
-                    <h4>5. Common Viva Questions & Answers</h4>
-                    <div class="viva-qa">
-                        <p class="qa-q">Q1: Why does SSTF cause starvation?</p>
-                        <p class="qa-a">A: If new requests continuously arrive close to the current head, distant requests wait indefinitely while local requests are perpetually prioritized.</p>
-                    </div>
-                    <div class="viva-qa">
-                        <p class="qa-q">Q2: Why does C-SCAN provide more uniform waiting times than SCAN?</p>
-                        <p class="qa-a">A: In SCAN, tracks near the center are visited twice in quick succession (once in each direction), while boundary tracks wait for a full two-way traversal. C-SCAN eliminates this asymmetry by only servicing in one direction.</p>
-                    </div>
-                    <div class="viva-qa">
-                        <p class="qa-q">Q3: How does the Adaptive Scheduler make decisions?</p>
-                        <p class="qa-a">A: It extracts queue features (spread, clustering, density, direction bias). Clustered workloads trigger SSTF; wide bidirectional spread triggers SCAN or C-SCAN; short monotonic streams trigger FCFS.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Scripts -->

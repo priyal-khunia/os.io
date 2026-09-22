@@ -52,11 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btnRefreshWorkloadBenchmark: document.getElementById('btnRefreshWorkloadBenchmark'),
         btnRunArrivalBenchmark: document.getElementById('btnRunArrivalBenchmark'),
         
-        // Viva Modal
-        btnVivaModalOpen: document.getElementById('btnVivaModalOpen'),
-        btnVivaModalClose: document.getElementById('btnVivaModalClose'),
-        vivaModalBackdrop: document.getElementById('vivaModalBackdrop'),
-        
         // Platter
         trackHeadMarker: document.getElementById('trackHeadMarker'),
         trackHeadTooltip: document.getElementById('trackHeadTooltip'),
@@ -148,8 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /* -------------------------------------------------------------
-       Parsing & Geometry Synchronization
+       Helpers, Parsing & Geometry Synchronization
     ------------------------------------------------------------- */
+
+    function formatConciseReason(text) {
+        if (!text) return 'Optimal policy selected for workload.';
+        let clean = text.trim();
+        clean = clean.replace(/^(According to operating system principles,?|Operating system principles state that|Disk scheduling algorithms are designed to|Because the workload has a high spatial spread,?)\s*/i, '');
+        const sentences = clean.split(/(?<=[.!?])\s+/);
+        if (sentences.length > 1) {
+            return sentences.slice(0, 1).join(' ').trim();
+        }
+        return clean;
+    }
 
     function parseInputRequests() {
         const text = elements.requestQueueInput.value.trim();
@@ -550,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.adaptiveDecisionBanner.style.display = 'flex';
             elements.adaptiveSelectedAlgo.textContent = data.adaptive_info.selected_algorithm;
             elements.adaptiveSelectedBasis.textContent = data.adaptive_info.selection_basis || 'Adaptive Policy';
-            elements.adaptiveSelectedReason.textContent = data.adaptive_info.reason || 'Workload analysis complete.';
+            elements.adaptiveSelectedReason.textContent = formatConciseReason(data.adaptive_info.reason);
         } else {
             elements.adaptiveDecisionBanner.style.display = 'none';
         }
@@ -598,7 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ruleInfo = data.rule_based || (data.adaptive_info?.rule_based_choice ? { recommended_algorithm: data.adaptive_info.rule_based_choice, reason: data.adaptive_info.reason } : null);
         if (ruleInfo) {
             elements.recAlgoName.textContent = ruleInfo.recommended_algorithm;
-            elements.recAlgoReason.textContent = ruleInfo.reason;
+            elements.recAlgoReason.textContent = formatConciseReason(ruleInfo.reason);
         } else {
             predictAdaptiveRecommendation();
         }
@@ -608,8 +614,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mlData && mlData.ml_predicted_algorithm && elements.mlAlgoName) {
             elements.mlAlgoName.textContent = mlData.ml_predicted_algorithm;
             elements.mlAlgoConf.textContent = mlData.confidence ? `(${Math.round(mlData.confidence * 100)}% conf)` : '';
-            const probs = mlData.probabilities ? Object.entries(mlData.probabilities).map(([k, v]) => `${k}: ${Math.round(v * 100)}%`).join(' • ') : '';
-            elements.mlAlgoReason.textContent = probs ? `Decision Tree Probabilities: ${probs}` : 'Evaluated [spread, density, clustering, direction_bias].';
+            const probs = mlData.probabilities ? Object.entries(mlData.probabilities)
+                .filter(([_, v]) => v > 0)
+                .map(([k, v]) => `${k} (${Math.round(v * 100)}%)`).join(', ') : '';
+            elements.mlAlgoReason.textContent = probs ? `Probabilities: ${probs}` : 'Evaluated queue features.';
         }
 
         // Oscilloscope Trajectory Chart
@@ -687,14 +695,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rule = res.data.rule_based || res.data.prediction;
                 if (rule && elements.recAlgoName) {
                     elements.recAlgoName.textContent = rule.recommended_algorithm || rule.predicted_algorithm;
-                    elements.recAlgoReason.textContent = rule.reason;
+                    elements.recAlgoReason.textContent = formatConciseReason(rule.reason);
                 }
                 const ml = res.data.ml_prediction || res.data.classification?.ml_prediction;
                 if (ml && elements.mlAlgoName) {
                     elements.mlAlgoName.textContent = ml.ml_predicted_algorithm || '-';
                     elements.mlAlgoConf.textContent = ml.confidence ? `(${Math.round(ml.confidence * 100)}% conf)` : '';
-                    const probs = ml.probabilities ? Object.entries(ml.probabilities).map(([k, v]) => `${k}: ${Math.round(v * 100)}%`).join(' • ') : '';
-                    elements.mlAlgoReason.textContent = probs ? `Decision Tree Probabilities: ${probs}` : 'Evaluated [spread, density, clustering, direction_bias].';
+                    const probs = ml.probabilities ? Object.entries(ml.probabilities)
+                        .filter(([_, v]) => v > 0)
+                        .map(([k, v]) => `${k} (${Math.round(v * 100)}%)`).join(', ') : '';
+                    elements.mlAlgoReason.textContent = probs ? `Probabilities: ${probs}` : 'Evaluated queue features.';
                 }
             }
         } catch (e) {
@@ -709,11 +719,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const rankings = data.ranking || [];
 
         const bestForMap = {
-            'SSTF': 'Min seek on localized clusters',
-            'SCAN': 'Starvation bounded boundary sweep',
-            'C-SCAN': 'Uniform wait time distribution',
-            'FCFS': 'Strict arrival-order FIFO determinism',
-            'Adaptive': 'Dynamically optimized by AI policy'
+            'SSTF': 'Min seek on clusters',
+            'SCAN': 'Bounded sweep, no starvation',
+            'C-SCAN': 'Uniform wait distribution',
+            'FCFS': 'Strict arrival order',
+            'Adaptive': 'Dynamic policy'
         };
 
         rankings.forEach((item, idx) => {
@@ -767,13 +777,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             });
 
+            const compactDescMap = {
+                'random': 'Scattered requests across cylinders',
+                'sequential': 'Ordered contiguous track runs',
+                'clustered': 'Dense hotspot locality',
+                'bursty': 'Local clusters with large jumps'
+            };
+
             card.innerHTML = `
                 <div class="bench-card-header">
                     <span class="bench-pattern-title">${pat.charAt(0).toUpperCase() + pat.slice(1)}</span>
                     <span class="bench-winner-badge">Winner: ${winner.algorithm}</span>
                 </div>
-                <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.45; min-height: 48px;">
-                    ${details.description || details.classification?.reason || ''}
+                <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 0.6rem;">
+                    ${compactDescMap[pat.toLowerCase()] || formatConciseReason(details.description || details.classification?.reason || '')}
                 </div>
                 <table class="bench-mini-table">
                     <tbody>${rowsHtml}</tbody>
@@ -879,11 +896,11 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.featDirDetail.textContent = 'No data';
 
         elements.recAlgoName.textContent = '-';
-        elements.recAlgoReason.textContent = "Awaiting workload input. Enter requests or trigger synthetic generator to analyze kinematics.";
+        elements.recAlgoReason.textContent = "Awaiting workload input.";
 
         if (elements.mlAlgoName) elements.mlAlgoName.textContent = '-';
         if (elements.mlAlgoConf) elements.mlAlgoConf.textContent = '';
-        if (elements.mlAlgoReason) elements.mlAlgoReason.textContent = "Awaiting workload features for ML decision tree inference.";
+        if (elements.mlAlgoReason) elements.mlAlgoReason.textContent = "Awaiting workload input.";
 
         if (elements.adaptiveDecisionBanner) {
             elements.adaptiveDecisionBanner.style.display = 'none';
@@ -1057,27 +1074,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (elements.btnRunArrivalBenchmark) {
         elements.btnRunArrivalBenchmark.addEventListener('click', () => {
             runArrivalBenchmark();
-        });
-    }
-
-    // Viva Guide Modal Open / Close
-    if (elements.btnVivaModalOpen && elements.vivaModalBackdrop) {
-        elements.btnVivaModalOpen.addEventListener('click', () => {
-            elements.vivaModalBackdrop.style.display = 'flex';
-        });
-    }
-
-    if (elements.btnVivaModalClose && elements.vivaModalBackdrop) {
-        elements.btnVivaModalClose.addEventListener('click', () => {
-            elements.vivaModalBackdrop.style.display = 'none';
-        });
-    }
-
-    if (elements.vivaModalBackdrop) {
-        elements.vivaModalBackdrop.addEventListener('click', (e) => {
-            if (e.target === elements.vivaModalBackdrop) {
-                elements.vivaModalBackdrop.style.display = 'none';
-            }
         });
     }
 
