@@ -95,7 +95,8 @@ const ChartManager = (function() {
                     pointBorderColor: '#ffffff',
                     pointBorderWidth: 1.5,
                     tension: 0,
-                    fill: false
+                    fill: false,
+                    clip: false
                 });
             });
         } else {
@@ -138,7 +139,8 @@ const ChartManager = (function() {
                 pointBorderWidth: 1.5,
                 pointHoverRadius: 7,
                 tension: 0,
-                fill: false
+                fill: false,
+                clip: false
             });
         }
 
@@ -153,6 +155,15 @@ const ChartManager = (function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: false,
+                clip: false,
+                layout: {
+                    padding: {
+                        top: 16,
+                        bottom: 10,
+                        left: 10,
+                        right: 14
+                    }
+                },
                 interaction: {
                     mode: 'nearest',
                     axis: 'x',
@@ -200,6 +211,7 @@ const ChartManager = (function() {
                         labels: {
                             color: '#0f172a',
                             boxWidth: 14,
+                            padding: 14,
                             font: { family: "'Plus Jakarta Sans', sans-serif", size: 11, weight: '600' }
                         }
                     },
